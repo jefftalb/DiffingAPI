@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DiffingAPI {
+namespace DiffingAPI.Models {
   public class DiffingContext : DbContext {
     public DiffingContext(DbContextOptions<DiffingContext> options) : base(options) { }
-    public DbSet<Diff> Diffs { get; set; } = null!;
+    public DbSet<DataPair> DataPairs { get; set; } = null!;
   }
 }
