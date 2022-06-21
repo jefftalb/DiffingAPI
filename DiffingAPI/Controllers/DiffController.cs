@@ -37,10 +37,10 @@ namespace DiffingAPI.Controllers {
     /// <param name="id">Id of diff</param>
     /// <param name="data">Base64 encoded string</param>
     [HttpPut("{id}/left")]
-    public async Task<IActionResult> PutDiffLeft(int id, [FromBody] string data) {
+    public async Task<IActionResult> PutDiffLeft(int id, [FromBody] DataModel dataModel) {
       // Check if data is Base64 encoded string and decode.
       try {
-        byte[] decodedData = Convert.FromBase64String(data);
+        byte[] decodedData = Convert.FromBase64String(dataModel.data);
       }
       catch (Exception) {
         return BadRequest();
@@ -51,13 +51,13 @@ namespace DiffingAPI.Controllers {
       if (dataPair is null) {
         dataPair = new DataPair() {
           Id = id,
-          LeftData = data
+          LeftData = dataModel.data
         };
 
         _context.Add(dataPair);
       }
       else {
-        dataPair.LeftData = data;
+        dataPair.LeftData = dataModel.data;
       }
 
 
@@ -73,10 +73,10 @@ namespace DiffingAPI.Controllers {
     /// <param name="id">Id of diff</param>
     /// <param name="data">Base64 encoded string</param>
     [HttpPut("{id}/right")]
-    public async Task<IActionResult> PutDiffRight(int id, [FromBody] string data) {
+    public async Task<IActionResult> PutDiffRight(int id, [FromBody] DataModel dataModel) {
       // Check if data is Base64 encoded string and decode.
       try {
-        byte[] decodedData = Convert.FromBase64String(data);
+        byte[] decodedData = Convert.FromBase64String(dataModel.data);
       }
       catch (Exception) {
         return BadRequest();
@@ -87,13 +87,13 @@ namespace DiffingAPI.Controllers {
       if (dataPair is null) {
         dataPair = new DataPair() {
           Id = id,
-          RightData = data
+          RightData = dataModel.data
         };
 
         _context.Add(dataPair);
       }
       else {
-        dataPair.RightData = data;
+        dataPair.RightData = dataModel.data;
       }
 
 

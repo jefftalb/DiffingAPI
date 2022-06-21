@@ -1,7 +1,9 @@
+using DiffingAPI.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 namespace DiffingAPI.Tests {
   [TestClass]
@@ -24,7 +26,8 @@ namespace DiffingAPI.Tests {
     // Test getting a diff that only has a left value
     [TestMethod]
     public async Task PutDiffLeft2_GetDiff2_ReturnNotFound() {
-      var jsonString = "\"AAAAAA==\"";
+      var dataModel = new DataModel() { data = "AAAAAA==" };
+      var jsonString = JsonSerializer.Serialize(dataModel);
       var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       var response = await _httpClient.PutAsync("/v1/diff/2/left", content);
 
@@ -38,13 +41,15 @@ namespace DiffingAPI.Tests {
     // Test getting a diff that is equal
     [TestMethod]
     public async Task PutDiffLeft3_PutDiffLeft3_GetDiff3_ReturnEqual() {
-      var jsonString = "\"AAAAAA==\"";
+      var dataModel = new DataModel() { data = "AAAAAA==" };
+      var jsonString = JsonSerializer.Serialize(dataModel);
       var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       var response = await _httpClient.PutAsync("/v1/diff/3/left", content);
 
       Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-
-      jsonString = "\"AAAAAA==\"";
+      
+      dataModel = new DataModel() { data = "AAAAAA==" };
+      jsonString = JsonSerializer.Serialize(dataModel);
       content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       response = await _httpClient.PutAsync("/v1/diff/3/right", content);
 
@@ -60,13 +65,15 @@ namespace DiffingAPI.Tests {
     // Test getting a diff with unequal lengths
     [TestMethod]
     public async Task PutDiffLeft4_PutDiffLeft4_GetDiff4_ReturnSizeDoesNotMatch() {
-      var jsonString = "\"AAAAAA==\"";
+      var dataModel = new DataModel() { data = "AAAAAA==" };
+      var jsonString = JsonSerializer.Serialize(dataModel);
       var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       var response = await _httpClient.PutAsync("/v1/diff/4/left", content);
 
       Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-      jsonString = "\"AAA=\"";
+      dataModel = new DataModel() { data = "AAA=" };
+      jsonString = JsonSerializer.Serialize(dataModel);
       content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       response = await _httpClient.PutAsync("/v1/diff/4/right", content);
 
@@ -82,13 +89,15 @@ namespace DiffingAPI.Tests {
     // Test getting a diff with same length but different values
     [TestMethod]
     public async Task PutDiffLeft5_PutDiffLeft5_GetDiff5_ReturnContentDoesNotMatch() {
-      var jsonString = "\"AAAAAA==\"";
+      var dataModel = new DataModel() { data = "AAAAAA==" };
+      var jsonString = JsonSerializer.Serialize(dataModel);
       var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       var response = await _httpClient.PutAsync("/v1/diff/4/left", content);
 
       Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-      jsonString = "\"AQABAQ==\"";
+      dataModel = new DataModel() { data = "AQABAQ==" };
+      jsonString = JsonSerializer.Serialize(dataModel);
       content = new StringContent(jsonString, Encoding.UTF8, "application/json");
       response = await _httpClient.PutAsync("/v1/diff/4/right", content);
 
