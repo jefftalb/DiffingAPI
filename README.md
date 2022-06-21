@@ -6,7 +6,7 @@
 Example curl request:
 ```
 curl -X 'GET' \
-'https://localhost:7206/v1/diff/1' \
+'https://localhost/v1/diff/1' \
 -H 'accept: application/json'
 ```
 
@@ -35,7 +35,7 @@ Parameters:
 Example curl request:
 ```
 curl -X 'PUT' \
-'https://localhost:7206/v1/Diff/1/left' \
+'https://localhost/v1/Diff/1/left' \
 -H 'accept: */*' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -60,7 +60,7 @@ Parameters:
 Example curl request:
 ```
 curl -X 'PUT' \
-'https://localhost:7206/v1/Diff/1/left' \
+'https://localhost/v1/Diff/1/left' \
 -H 'accept: */*' \
 -H 'Content-Type: application/json' \
 -d '{
